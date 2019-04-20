@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM jenkins:lts
  
 RUN apt-get update && apt-get install -y wget git curl
 RUN apt-get update && apt-get install -y --no-install-recommends openjdk-7-jdk
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y jenkins
 RUN mkdir -p /var/jenkins_home && chown -R jenkins /var/jenkins_home
 ADD init.groovy /tmp/WEB-INF/init.groovy
 RUN apt-get install -y zip && cd /tmp && zip -g /usr/share/jenkins/jenkins.war WEB-INF/init.groovy
+RUN apt-get update && apt-get install -y rsync
 USER jenkins
 
 # VOLUME /var/jenkins_home - bind this in via -v if you want to make this persistent.
